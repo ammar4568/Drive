@@ -1,0 +1,76 @@
+.folder {
+    border: 1px solid #D3D3D3;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.fa-folder {
+    color: #A9A9A9;
+    margin: 0px 10px 0px 8px;
+    font-size: 1.25em;
+    float: left;
+}
+
+.folder-title {
+    overflow: hidden;
+    margin-bottom: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.file {
+    border: 1px solid #D3D3D3;
+    padding: 15px;
+    margin: 10px;
+    border-radius: 8px;
+}
+
+.fa-file {
+    color: #A9A9A9;
+    margin: 0px 10px 0px 8px;
+    font-size: 1.25em;
+    float: left;
+}
+
+.img-fluid {
+    display: block;
+    margin: 10px auto;
+    height: 100px;
+    /* width: 100px; */
+}
+
+.dropzone {
+    /* z-index: -50; */
+    display: flex;
+    /* visibility: hidden; */
+    /* position: absolute; */
+    top: 0;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    font-weight: 200;
+    height: 400px;
+    border: 2px dashed #f16624;
+    border-radius: 5px;
+    background: white;
+    margin: 10px 0;
+}
+
+.dropzone.hovering {
+    /* visibility: visible; */
+    border: 2px solid #f16624;
+    color: #dadada !important;
+}
+
+.dropzone .file-label {
+    font-size: 1.2em;
+}
+
+progress::-webkit-progress-value {
+    transition: width 0.1s ease;
+}
+
+img {
+    width: 250px;
+}

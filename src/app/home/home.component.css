@@ -1,0 +1,11 @@
+.sidebar {
+    background-color: #fff;
+}
+
+li>a>span {
+    color: #000;
+}
+
+li>a>span:hover {
+    color: #D3D3D3;
+}
