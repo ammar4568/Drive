@@ -4,6 +4,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { tap, finalize } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
+import { SwalPartialTargets } from '@toverux/ngx-sweetalert2';
+import swal from 'sweetalert2';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-drive',
@@ -37,14 +40,26 @@ export class DriveComponent implements OnInit {
   constructor(private storage: AngularFireStorage,
     private db: AngularFirestore,
     private auth: AuthService,
-    private afs: AngularFirestore) {
+    private afs: AngularFirestore,
+    public readonly swalTargets: SwalPartialTargets) {
     this.auth.user.subscribe(user => {
       this.user = user;
 
+      // const ref = this.afs.collection(`users/${this.user.uid}/Root/`);
+      // ref.get().subscribe(x => {
+      //   x.forEach(a => {
+      //     console.log(a.data());
+      //   });
+      // });
+
+
       this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder');
-      this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder').valueChanges().subscribe(a => {
-        console.log(a);
+
+
+      this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder').collection('Folder1').valueChanges().subscribe(item => {
+        console.log(item);
       });
+
       // this.afs.doc(x.path).valueChanges().subscribe(z => {
       //   console.log(z);
       // });
@@ -121,8 +136,24 @@ export class DriveComponent implements OnInit {
     // The main task
     this.task = this.storage.upload(path, file, { customMetadata });
 
+
+
     // Progress monitoring
     this.percentage = this.task.percentageChanges();
+
+    // swal({
+    //   title: 'Uploading',
+    //   text: 'Here\'s a custom image.',
+    //   html:
+    //     `
+    //         <div class="progress">
+    //           <div class="progress-bar" role="progressbar"
+    //           style="width: 40%"
+    //             aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+    //         </div>
+    //         `
+    // });
+
     this.snapshot = this.task.snapshotChanges().pipe(
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
@@ -131,7 +162,7 @@ export class DriveComponent implements OnInit {
         }
       }),
       finalize(() => {
-        // this.downloadURL = this.storage.ref(path).getDownloadURL();
+        this.downloadURL = this.storage.ref(path).getDownloadURL();
         console.log(path);
         // this.downloadURL = this.storage.ref(path).getDownloadURL();
       })
@@ -148,5 +179,4 @@ export class DriveComponent implements OnInit {
       snapshot.bytesTransferred < snapshot.totalBytes
     );
   }
-
 }

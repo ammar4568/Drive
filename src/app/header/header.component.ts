@@ -8,9 +8,15 @@ import { Router } from '@angular/router';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+  user;
 
   constructor(private auth: AuthService,
-    private router: Router) { }
+    private router: Router) {
+    this.auth.user.subscribe(user => {
+      this.user = user;
+      // console.log(user);
+    });
+  }
 
   ngOnInit() {
   }

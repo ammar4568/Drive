@@ -9,3 +9,22 @@ li>a>span {
 li>a>span:hover {
     color: #D3D3D3;
 }
+
+.active {
+    background: #E8F0FE;
+    border-top-right-radius: 50em;
+    border-bottom-right-radius: 50em;
+}
+
+.active>a>span {
+    color: #2972D5;
+}
+
+.active>a>i {
+    color: #2972D5;
+    font-size: 25px !important;
+}
+
+i {
+    color: #000;
+}

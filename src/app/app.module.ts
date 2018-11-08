@@ -12,6 +12,7 @@ import { HeaderComponent } from './header/header.component';
 import { DriveComponent } from './drive/drive.component';
 import { DropZoneDirective } from './drop-zone.directive';
 import { FileSizePipe } from './file-size.pipe';
+import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,13 @@ import { FileSizePipe } from './file-size.pipe';
     AngularFireModule.initializeApp(environment.firebase),
     CoreModule,
     AppRoutingModule,
-    AngularFireStorageModule
+    AngularFireStorageModule,
+    SweetAlert2Module.forRoot({
+      buttonsStyling: false,
+      customClass: 'modal-content',
+      confirmButtonClass: 'btn btn-primary',
+      cancelButtonClass: 'btn'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],
