@@ -14,18 +14,21 @@ export class DropZoneDirective {
   onDrop($event) {
     $event.preventDefault();
     this.dropped.emit($event.dataTransfer.files);
+    // console.log('Drop');
     this.hovered.emit(false);
   }
 
   @HostListener('dragover', ['$event'])
   onDragOver($event) {
     $event.preventDefault();
+    // console.log('Drag');
     this.hovered.emit(true);
   }
 
   @HostListener('dragleave', ['$event'])
   onDragLeave($event) {
     $event.preventDefault();
+    // console.log('Drag Leave');s
     this.hovered.emit(false);
   }
 
