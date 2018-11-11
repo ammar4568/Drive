@@ -1,0 +1,14 @@
+[debug] [2018-11-11T08:56:03.343Z] ----------------------------------------------------------------------
+[debug] [2018-11-11T08:56:03.345Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Ammar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions
+[debug] [2018-11-11T08:56:03.345Z] CLI Version:   6.0.1
+[debug] [2018-11-11T08:56:03.345Z] Platform:      win32
+[debug] [2018-11-11T08:56:03.345Z] Node Version:  v8.11.4
+[debug] [2018-11-11T08:56:03.346Z] Time:          Sun Nov 11 2018 13:56:03 GMT+0500 (Pakistan Standard Time)
+[debug] [2018-11-11T08:56:03.346Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-11-11T08:56:03.360Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-11-11T08:56:03.360Z] > authorizing via signed-in user
+[debug] [2018-11-11T08:56:03.360Z] [iam] checking project drive-51d7b for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2018-11-11T08:56:03.363Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/drive-51d7b:testIamPermissions  
+
+[debug] [2018-11-11T08:56:04.802Z] <<< HTTP RESPONSE 200

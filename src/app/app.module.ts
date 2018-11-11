@@ -13,6 +13,7 @@ import { DriveComponent } from './drive/drive.component';
 import { DropZoneDirective } from './drop-zone.directive';
 import { FileSizePipe } from './file-size.pipe';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
       customClass: 'modal-content',
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn'
-    })
+    }),
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent],

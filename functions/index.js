@@ -2,6 +2,10 @@ const functions = require('firebase-functions');
 const admin = require('firebase-admin');
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
+var cors = require('cors');
+var app = require('express')();
+app.use(cors());
+
 // const db = admin.firestore("/users/Qahm87doicWrmkozQ10fGHb71Q82/Root");
 // const db = require('firebase-da')
 // // Create and Deploy Your First Cloud Functions
@@ -43,7 +47,7 @@ exports.getHello = functions.https.onRequest((req, res) => {
     docref.getCollections().then(rcc => {
         let arr = '';
         rcc.forEach(c => {
-            arr = arr +'/'+ c.id;
+            arr = arr + '/' + c.id;
         });
         res.send(arr).status(200);
         return;

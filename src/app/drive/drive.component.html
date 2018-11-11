@@ -1,5 +1,6 @@
 <div class="container-fluid ">
-  <div class="aa dropzone" appDropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)" [class.hovering]="isHovering">
+  <div class="aa dropzone" style="width: 80%;" DropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)"
+    [class.hovering]="isHovering">
     <!-- Folder Div -->
     <div *ngIf="currentUrl === ''">
       <div class="row">

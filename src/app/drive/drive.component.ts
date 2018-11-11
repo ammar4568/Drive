@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireStorage, AngularFireUploadTask } from '@angular/fire/storage';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
-import { tap, finalize } from 'rxjs/operators';
+import { tap, finalize, catchError } from 'rxjs/operators';
 import { AuthService } from '../core/auth.service';
 import { SwalPartialTargets } from '@toverux/ngx-sweetalert2';
 import swal from 'sweetalert2';
 import { Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-drive',
@@ -46,19 +47,85 @@ export class DriveComponent implements OnInit {
     private auth: AuthService,
     private afs: AngularFirestore,
     public readonly swalTargets: SwalPartialTargets,
-    private router: Router) {
+    private router: Router,
+    private http: HttpClient) {
     this.auth.user.subscribe(user => {
       this.user = user;
 
       // console.log(this.router.url);
       this.currentUrl = this.router.url.split('/')[1];
 
-      this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder');
+      if (this.currentUrl === 'starred') {
+        this.afs.collection(`users/${this.user.uid}/Starred`).valueChanges().subscribe(item => {
+          this.imageFiles = [];
+          item.map((i: any) => {
+            if (i.path) {
+              this.storage.ref(i.path).getDownloadURL().subscribe(p => {
+                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+              });
+              // console.log(i.path);
+            } else {
+              // console.log(i, 'No');
+            }
+          });
+        });
+      } else if (this.currentUrl === 'trash') {
+        this.afs.collection(`users/${this.user.uid}/Trash`).valueChanges().subscribe(item => {
+          this.imageFiles = [];
+          item.map((i: any) => {
+            if (i.path) {
+              this.storage.ref(i.path).getDownloadURL().subscribe(p => {
+                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+              });
+              // console.log(i.path);
+            } else {
+              // console.log(i, 'No');
+            }
+          });
+        });
+      } else {
+        this.afs.collection(`users/${this.user.uid}/Root`).snapshotChanges().subscribe(item => {
+          item.map(i => {
+            if (i.payload.doc.id === 'Folder') {
+            }
+          });
+        });
+
+        this.afs.collection(`users/${this.user.uid}/Root`).valueChanges().subscribe(item => {
+          this.imageFiles = [];
+          item.map((i: any) => {
+            if (i.path) {
+              this.storage.ref(i.path).getDownloadURL().subscribe(p => {
+                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+              });
+              // console.log(i.path);
+            } else {
+              // console.log(i, 'No');
+            }
+          });
+        });
+        this.userData = this.afs.collection(`users/${this.user.uid}/Root`).valueChanges();
+        const httpOptions = {
+          headers: new HttpHeaders({
+            'Access-Control-Allow-Origin': '*',
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Headers': '*'
+          })
+        };
+        this.http
+          .post('https://us-central1-drive-51d7b.cloudfunctions.net/getHello',
+            { 'url': '/users/Qahm87doicWrmkozQ10fGHb71Q82/Root' },
+            httpOptions)
+          .subscribe(x => {
+            console.log(x);
+          });
+      }
+      // this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder');
 
 
-      this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder').collection('Folder1').valueChanges().subscribe(item => {
+      /* this.afs.collection(`users/${this.user.uid}/Root`).doc('Folder').collection('Folder1').valueChanges().subscribe(item => {
         // console.log(item);
-      });
+      }); */
 
       // this.afs.doc(x.path).valueChanges().subscribe(z => {
       //   console.log(z);
@@ -72,31 +139,8 @@ export class DriveComponent implements OnInit {
       // this.afs.doc(`users/${this.user.uid}/Root/Folder`).get();
 
 
-      this.afs.collection(`users/${this.user.uid}/Root`).snapshotChanges().subscribe(item => {
-        item.map(i => {
-          // console.log(i.payload.doc.data(), '  '  , i.payload.doc.id);
-          if (i.payload.doc.id === 'Folder') {
-            // this.afs.collection('users').doc('Folders').valueChanges()
-          }
-        });
-      });
-      this.afs.collection(`users/${this.user.uid}/Root`).valueChanges().subscribe(item => {
-        // this.storage.ref()
-        // console.log(item);
-        this.imageFiles = [];
-        item.map((i: any) => {
-          if (i.path) {
-            this.storage.ref(i.path).getDownloadURL().subscribe(p => {
-              this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
-            });
-            // console.log(i.path);
-          } else {
-            // console.log(i, 'No');
-          }
-          // let x = {};
-        });
-      });
-      this.userData = this.afs.collection(`users/${this.user.uid}/Root`).valueChanges();
+
+
     });
   }
 
