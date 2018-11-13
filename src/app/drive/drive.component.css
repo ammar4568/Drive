@@ -3,6 +3,7 @@
     padding: 10px;
     margin: 10px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .fa-folder {
@@ -24,6 +25,7 @@
     padding: 15px;
     margin: 10px;
     border-radius: 8px;
+    cursor: pointer;
 }
 
 .fa-file {
@@ -87,11 +89,6 @@ img {
 .ab {
     width: 75%;
     /* opacity: 0; */
-}
-
-.aa {
-    /* z-index: 10; */
-    /* pointer-events: none; */
 }
 
 /* Style the Image Used to Trigger the Modal */
@@ -222,4 +219,11 @@ img {
     .modal-content {
         width: 100%;
     }
+}
+
+#folderMenu {
+    position: absolute;
+    display: none;
+    width: 200px;
+    height: auto;
 }

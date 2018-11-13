@@ -5,54 +5,52 @@
   <!-- Sidebar -->
   <ul class="sidebar navbar-nav">
     <li class="nav-item">
-      <div class="nav-link">
-        <button class="btn btn-info"><i class="fa fa-plus" style="color: #fff"></i> New</button>
+      <div class="dropdown nav-link">
+        <button class="btn btn-info new-button" aria-expanded="false" aria-haspopup="true" id="newButton"
+          data-toggle="dropdown"><i class="fa fa-plus" style="color: #fff"></i>
+          New</button>
+        <div class="dropdown-menu" aria-labelledby="newButton">
+          <a class="dropdown-item" style="cursor: pointer;" (click)="notifyType('file')">File</a>
+          <a class="dropdown-item" style="cursor: pointer;" (click)="notifyType('folder')">Folder</a>
+        </div>
       </div>
     </li>
-    <li class="nav-item active">
+    <li class="nav-item" id="my-drive">
       <a class="nav-link" [routerLink]="['/']">
         <i class="fa fa-home"></i>
         &nbsp;
         <span>My Drive</span>
       </a>
     </li>
-    <li class="nav-item dropdown" hidden>
-      <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+    <li class="nav-item">
+      <button class="nav-link disabled-button" disabled id="pagesDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-desktop"></i>
         &nbsp;
         <span>Computers</span>
-      </a>
-      <div class="dropdown-menu" aria-labelledby="pagesDropdown">
-        <h6 class="dropdown-header">Login Screens:</h6>
-        <a class="dropdown-item" href="login.html">Login</a>
-        <a class="dropdown-item" href="register.html">Register</a>
-        <a class="dropdown-item" href="forgot-password.html">Forgot Password</a>
-        <div class="dropdown-divider"></div>
-        <h6 class="dropdown-header">Other Pages:</h6>
-        <a class="dropdown-item" href="404.html">404 Page</a>
-        <a class="dropdown-item" href="blank.html">Blank Page</a>
-      </div>
-    </li>
-    <li class="nav-item" hidden>
-      <a class="nav-link" href="charts.html">
-        <i class="fa fa-users"></i>
-        &nbsp;
-        <span>Shared with me</span></a>
-    </li>
-    <li class="nav-item" hidden>
-      <a class="nav-link" href="tables.html">
-        <i class="fa fa-clock-o"></i>
-        &nbsp;
-        <span>Recent</span></a>
+      </button>
     </li>
     <li class="nav-item">
+      <button class="nav-link disabled-button" disabled href="charts.html">
+        <i class="fa fa-users"></i>
+        &nbsp;
+        <span>Shared with me</span>
+      </button>
+    </li>
+    <li class="nav-item">
+      <button class="nav-link disabled-button" disabled href="tables.html">
+        <i class="fa fa-clock-o"></i>
+        &nbsp;
+        <span>Recent</span>
+      </button>
+    </li>
+    <li class="nav-item" id="starred">
       <a class="nav-link" [routerLink]="['/starred']">
         <i class="fa fa-star"></i>
         &nbsp;
         <span>Starred</span></a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" id="trash">
       <a class="nav-link" [routerLink]="['/trash']">
         <i class="fa fa-trash"></i>
         &nbsp;
@@ -62,7 +60,7 @@
 
   <div class="container-fluid">
 
-    <app-drive></app-drive>
+    <app-drive #type></app-drive>
 
   </div>
 

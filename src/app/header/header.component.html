@@ -9,7 +9,8 @@
   <!-- Navbar Search -->
   <form class="d-none d-md-inline-block form-inline">
     <div class="input-group">
-      <input type="text" class="form-control" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+      <input type="text" class="form-control" placeholder="Search for..." aria-label="Search"
+        aria-describedby="basic-addon2">
       <div class="input-group-append" style="z-index: 0 !important;">
         <button class="btn btn-primary" type="button" style="z-index: 0 !important;">
           <i class="fa fa-search" style="z-index: 0 !important;"></i>
@@ -21,8 +22,8 @@
   <!-- Navbar -->
   <ul style="margin-left: 220px !important;" class="navbar-nav ml-auto ml-md-0">
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-bell fa-lg"></i>
         <!-- <span class="badge badge-danger">9+</span> -->
       </a>
@@ -34,8 +35,8 @@
       </div>
     </li>
     <li class="nav-item dropdown no-arrow mx-1">
-      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="messagesDropdown" role="button"
+        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-envelope fa-lg"></i>
         <!-- <span class="badge badge-danger">7</span> -->
       </a>
@@ -47,16 +48,21 @@
       </div>
     </li>
     <li class="nav-item dropdown no-arrow">
-      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-        aria-expanded="false">
+      <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
         <!-- <i class="fa fa-user-circle fa-fw"></i> -->
-        <img *ngIf="user" src="{{user.photoURL}}" height="35" width="35" class="img-fluid" style="border-radius: 50%;" />
+        <img *ngIf="user" src="{{user.photoURL}}" height="35" width="35" class="img-fluid"
+          style="border-radius: 50%;" />
       </a>
       <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userDropdown">
-        <a class="dropdown-item" href="#">Settings</a>
-        <a class="dropdown-item" href="#">Activity Log</a>
+        <!-- <a class="dropdown-item" href="#">Settings</a> -->
+        <!-- <a class="dropdown-item" href="#">Activity Log</a> -->
+        <img *ngIf="user" src="{{user.photoURL}}" class="img-fluid" style="border-radius: 50%; width: 70%; margin: 0 auto; display: block;" />
+        <a class="dropdown-item" *ngIf="user" aria-disabled="true">{{user.displayName}}</a>
+        <!-- <div class="dropdown-divider"></div> -->
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal" (click)="logout()">Logout</a>
+        <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal"
+          (click)="logout()">Logout</a>
       </div>
     </li>
   </ul>

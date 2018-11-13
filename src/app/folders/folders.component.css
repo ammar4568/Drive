@@ -1,0 +1,13 @@
+.folder-title {
+    overflow: hidden;
+    margin-bottom: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.fa-folder {
+    color: #A9A9A9;
+    margin: 0px 10px 0px 8px;
+    font-size: 1.25em;
+    float: left;
+}

@@ -14,6 +14,8 @@ import { DropZoneDirective } from './drop-zone.directive';
 import { FileSizePipe } from './file-size.pipe';
 import { SweetAlert2Module } from '@toverux/ngx-sweetalert2';
 import { HttpClientModule } from '@angular/common/http';
+import { FoldersComponent } from './folders/folders.component';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderComponent,
     DriveComponent,
     DropZoneDirective,
-    FileSizePipe
+    FileSizePipe,
+    FoldersComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,10 @@ import { HttpClientModule } from '@angular/common/http';
       confirmButtonClass: 'btn btn-primary',
       cancelButtonClass: 'btn'
     }),
-    HttpClientModule
+    HttpClientModule,
+    ContextMenuModule.forRoot({
+      useBootstrap4: true,
+    })
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -16,6 +16,12 @@ li>a>span:hover {
     border-bottom-right-radius: 50em;
 }
 
+.new-button {
+    border-radius: 50em;
+    width: 110px;
+    height: 45px;
+}
+
 .active>a>span {
     color: #2972D5;
 }
@@ -27,4 +33,11 @@ li>a>span:hover {
 
 i {
     color: #000;
+}
+
+.disabled-button {
+    cursor: no-drop;
+    background: none;
+    border: none;
+    color: #000 !important;
 }

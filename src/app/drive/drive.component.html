@@ -1,67 +1,32 @@
-<div class="container-fluid ">
-  <div class="aa dropzone" style="width: 80%;" DropZone (hovered)="toggleHover($event)" (dropped)="startUpload($event)"
-    [class.hovering]="isHovering">
+<div class="container-fluid " [contextMenu]="newMenu">
+  <div class="aa dropzone" style="width: 80%;" appDropZone (hovered)="toggleHover($event)"
+    (dropped)="startUpload($event)" [class.hovering]="isHovering">
     <!-- Folder Div -->
     <div *ngIf="currentUrl === ''">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item" *ngFor="let path of folderCrumb"><a (click)=changePathCrumb(path)
+              href="#">{{path}}</a></li>
+        </ol>
+      </nav>
       <div class="row">
-        <h2>Folders</h2>
+        <h2>&nbsp;Folders</h2>
       </div>
       <div class="row">
-        <div class="col-md-2 folder">
+        <app-folders class="col-md-2 folder" *ngFor="let folder of folders" (pathEvent)="changePath($event)"
+          [name]="folder" [contextMenu]="folderMenu" [contextMenuSubject]="folder"></app-folders>
+        <!-- <div class="col-md-2 folder" *ngFor="let folder of folders">
+          <i class="fa fa-folder"></i>
+          <p class="folder-title" (click)="changeFolder(folder.name)">{{folder.name}}</p>
+        </div> -->
+        <!-- <div class="col-md-2 folder">
           <i class="fa fa-folder"></i>
           <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-        <div class="col-md-2 folder">
-          <i class="fa fa-folder"></i>
-          <p class="folder-title">Hellooooooooooooooooooooooooooooooooooooo</p>
-        </div>
-
-
+        </div> -->
       </div>
     </div>
     <div class="row">
-      <h2>Files</h2>
+      <h2>&nbsp;Files</h2>
     </div>
     <div class="row">
       <!--  
@@ -70,9 +35,11 @@
 
     </div> 
     -->
-      <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-    Launch demo modal
-  </button> -->
+      <!-- 
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+      Launch demo modal
+      </button> 
+    -->
 
 
       <!-- <button style="z-index: 30" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -82,8 +49,10 @@
       <!-- <img id="myImg" src="img_snow.jpg" alt="Snow" style="width:100%;max-width:300px"> -->
 
 
-      <div class="col-md-2 file" *ngFor="let file of imageFiles">
-        <img *ngIf="file.path" data-toggle="modal" (click)="setCurrentImage(file)" class="img-fluid" src="{{file.path}}" />
+      <div class="col-md-2 file" *ngFor="let file of imageFiles" [contextMenu]="fileMenu"
+        [contextMenuSubject]="file">
+        <img *ngIf="file.path" data-toggle="modal" (click)="setCurrentImage(file)" class="img-fluid"
+          src="{{file.path}}" />
         <i class="fa fa-file"></i>
         <p class="folder-title">{{file.name}}</p>
       </div>
@@ -136,19 +105,32 @@
   <progress class="progress is-info" [value]="pct" max="100">
   </progress>
 
-  {{ pct | number }}%
+  {{ pct
+  |
+  number
+  }}%
 
 </div>
 
 <div *ngIf="(snapshot | async) as snap" hidden>
-  {{ snap.bytesTransferred | fileSize }} of {{ snap.totalBytes | fileSize }}
+  {{
+  snap.bytesTransferred
+  |
+  fileSize
+  }} of
+  {{
+  snap.totalBytes
+  |
+  fileSize
+  }}
 
 
   <div *ngIf="downloadURL | async as url">
     <h3>Results!</h3>
     <img [src]="url">
     <br>
-    <a [href]="url" target="_blank" rel="noopener">Download Me!</a>
+    <a [href]="url" target="_blank" rel="noopener">Download
+      Me!</a>
   </div>
   <hr>
 
@@ -203,3 +185,33 @@
   <!-- Modal Caption (Image Text) -->
   <div id="caption"></div>
 </div>
+
+<context-menu #folderMenu>
+  <ng-template contextMenuItem (execute)="openFolder($event.item.name)">
+    Open
+  </ng-template>
+  <!-- <ng-template contextMenuItem (execute)="deleteFolder($event.item.name)">
+    Delete
+  </ng-template> -->
+</context-menu>
+
+<context-menu #fileMenu>
+  <ng-template class="btn" contextMenuItem (execute)="setCurrentImage($event.item)">
+    Open
+  </ng-template>
+  <ng-template contextMenuItem (execute)="deleteFile($event.item)">
+    Delete
+  </ng-template>
+  <ng-template contextMenuItem (execute)="fileInfo($event.item)">
+    Details
+  </ng-template>
+</context-menu>
+
+<context-menu #newMenu>
+  <ng-template class="btn" contextMenuItem (execute)="upload('file')">
+    <i class="fa fa-file" style="margin-left: 0; padding-left:0;"></i> New File
+  </ng-template>
+  <ng-template contextMenuItem (execute)="upload('folder')">
+    <i class="fa fa-folder" style="margin-left: 0; padding-left:0;"></i> New Folder
+  </ng-template>
+</context-menu>
