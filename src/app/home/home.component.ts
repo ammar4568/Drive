@@ -11,6 +11,9 @@ export class HomeComponent implements OnInit {
   @ViewChild('type')
   private drive: DriveComponent;
 
+  // @ViewChild('search')
+  // private driveSearch: DriveComponent;
+
   currentUrl;
 
   constructor(private router: Router) {
@@ -35,6 +38,11 @@ export class HomeComponent implements OnInit {
 
   notifyType(type) {
     this.drive.upload(type);
+  }
+
+  search(searchTerm) {
+    this.drive.upload(searchTerm);
+
   }
 
 }

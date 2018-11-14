@@ -69,7 +69,7 @@ export class DriveComponent implements OnInit {
           item.map((i: any) => {
             if (i.path) {
               this.storage.ref(i.path).getDownloadURL().subscribe(p => {
-                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+                this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
               });
               // console.log(i.path);
             } else {
@@ -83,7 +83,7 @@ export class DriveComponent implements OnInit {
           item.map((i: any) => {
             if (i.path) {
               this.storage.ref(i.path).getDownloadURL().subscribe(p => {
-                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+                this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
               });
               // console.log(i.path);
             } else {
@@ -102,9 +102,11 @@ export class DriveComponent implements OnInit {
         this.afs.collection(`users/${this.user.uid}/Root`).valueChanges().subscribe(item => {
           this.imageFiles = [];
           item.map((i: any) => {
+            // console.log(i);
+
             if (i.path) {
               this.storage.ref(i.path).getDownloadURL().subscribe(p => {
-                this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+                this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
               });
               // console.log(i.path);
             } else {
@@ -211,7 +213,7 @@ export class DriveComponent implements OnInit {
         item.map((i: any) => {
           if (i.path) {
             this.storage.ref(i.path).getDownloadURL().subscribe(p => {
-              this.imageFiles.push({ path: p, name: 'test', dbPath: i.path, size: i.size });
+              this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
             });
             // console.log(i.path);
           } else {
@@ -416,6 +418,41 @@ export class DriveComponent implements OnInit {
             console.log(err);
           });
       }
+    } else {
+      if (type !== '') {
+        this.afs.collection(
+          `users/${this.user.uid}/Root/${this.currentFolderPath}`,
+          ref => ref.where('name', '==', type)).valueChanges()
+          .subscribe(item => {
+            this.imageFiles = [];
+            item.map((i: any) => {
+              if (i.path) {
+                this.storage.ref(i.path).getDownloadURL().subscribe(p => {
+                  this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
+                });
+                // console.log(i.path);
+              } else {
+                // console.log(i, 'No');
+              }
+            });
+          });
+      } else {
+        this.afs.collection(
+          `users/${this.user.uid}/Root/${this.currentFolderPath}`).valueChanges()
+          .subscribe(item => {
+            this.imageFiles = [];
+            item.map((i: any) => {
+              if (i.path) {
+                this.storage.ref(i.path).getDownloadURL().subscribe(p => {
+                  this.imageFiles.push({ path: p, name: i.name, dbPath: i.path, size: i.size });
+                });
+                // console.log(i.path);
+              } else {
+                // console.log(i, 'No');
+              }
+            });
+          });
+      }
     }
   }
 
@@ -436,6 +473,9 @@ export class DriveComponent implements OnInit {
       console.error('unsupported file type :( ');
       return;
     }
+
+    const name = file.name.split('.')[0];
+    // console.log(name);
 
     // The storage path
     const path = `${this.user.uid}/${new Date().getTime()}_${file.name}`;
@@ -482,7 +522,8 @@ export class DriveComponent implements OnInit {
       tap(snap => {
         if (snap.bytesTransferred === snap.totalBytes) {
           // Update firestore on completion
-          this.db.collection(`users/${this.user.uid}/Root/${this.currentFolderPath}`).add({ path, size: snap.totalBytes });
+          this.db.collection(`users/${this.user.uid}/Root/${this.currentFolderPath}`)
+            .add({ path, size: snap.totalBytes, name: name });
         }
       }),
       finalize(() => {
@@ -539,5 +580,9 @@ export class DriveComponent implements OnInit {
       });
     });
 
+  }
+
+  search(search) {
+    console.log(search);
   }
 }
